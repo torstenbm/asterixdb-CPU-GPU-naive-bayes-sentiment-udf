@@ -50,24 +50,9 @@ public class CPUExample {
 
     public static void main(String[] args) throws InterruptedException {
 
-        /*
-         * Create a new classifier instance. The context features are Strings and the
-         * context will be classified with a String according to the featureset of the
-         * context.
-         */
         final Classifier<String, String> bayes = new BayesClassifier<String, String>();
-        /*
-         * Please note, that this particular classifier implementation will "forget"
-         * learned classifications after a few learning sessions. The number of learning
-         * sessions it will record can be set as follows:
-         */
-        bayes.setMemoryCapacity(4000000);
 
-        /*
-         * The classifier can learn from classifications that are handed over to the
-         * learn methods. Imagine a tokenized text as follows. The tokens are the text's
-         * features. The category of the text will either be positive or negative.
-         */
+        bayes.setMemoryCapacity(4000000);
 
         String testingCsvFile = "/Users/torsten/Java-Naive-Bayes-Classifier/example/testdata.manual.csv";
         String trainingCsvFile = "/Users/torsten/Java-Naive-Bayes-Classifier/example/training.shuffled.csv";
@@ -106,67 +91,6 @@ public class CPUExample {
             }
             parser.stopParsing();
 
-
-
-
-
-
-
-
-            // String filename = "featureCountPerCategory.ser";
-            // String filename2 = "totalFeatureCount.ser";
-            // String filename3 = "totalCategoryCount.ser";
-            // try {
-                // FileOutputStream file = new FileOutputStream(filename);
-                // ObjectOutputStream out = new ObjectOutputStream(file);
-                // out.writeObject(bayes.featureCountPerCategory);
-    
-                // file = new FileOutputStream(filename2);
-                // out = new ObjectOutputStream(file);
-                // out.writeObject(bayes.totalCategoryCount);
-    
-                // file = new FileOutputStream(filename3);
-                // out = new ObjectOutputStream(file);
-                // out.writeObject(bayes.totalCategoryCount);
-    
-                // out.close();
-                // file.close();
-    
-                // System.out.println("Object has been serialized");
-    
-                /////////////////////////////////////////////////////
-    
-            //     FileInputStream file = new FileInputStream(filename);
-            //     ObjectInputStream in = new ObjectInputStream(file);
-            //     bayes.featureCountPerCategory = (Dictionary<String, Dictionary<String, Integer>>) in.readObject();
-                
-            //     file = new FileInputStream(filename2);
-            //     in = new ObjectInputStream(file);
-            //     bayes.totalFeatureCount = (Dictionary<String, Integer>) in.readObject();
-    
-            //     file = new FileInputStream(filename3);
-            //     in = new ObjectInputStream(file);
-            //     bayes.totalCategoryCount = (Dictionary<String, Integer>) in.readObject();
-                  
-            //     in.close(); 
-            //     file.close(); 
-    
-            // } catch (Exception e) {
-            //     //TODO: handle exception
-            // }
-    
-
-
-
-
-
-
-
-
-
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -185,14 +109,6 @@ public class CPUExample {
         System.out.println(learnedPositives);
         System.out.println(learnedNegatives);
         System.out.println(trainingTotal);
-
-
-        /*
-         * Now that the classifier has "learned" two classifications, it will
-         * be able to classify similar sentences. The classify method returns
-         * a Classification Object, that contains the given featureset,
-         * classification probability and resulting category.
-         */
 
         String category; 
         int rights = 0, wrongs = 0;
@@ -247,28 +163,5 @@ public class CPUExample {
         System.out.println("Classification completed in " + String.valueOf((endTime-startTime)/Math.pow(10, 9)) + " seconds");
         System.out.println(String.format("With %d correct predictions and %d wrong", rights, wrongs));
         System.out.println(totals);
-        /*
-         * The BayesClassifier extends the abstract Classifier and provides
-         * detailed classification results that can be retrieved by calling
-         * the classifyDetailed Method.
-         *
-         * The classification with the highest probability is the resulting
-         * classification. The returned List will look like this.
-         * [
-         *   Classification [
-         *     category=negative,
-         *     probability=0.0078125,
-         *     featureset=[today, is, a, sunny, day]
-         *   ],
-         *   Classification [
-         *     category=positive,
-         *     probability=0.0234375,
-         *     featureset=[today, is, a, sunny, day]
-         *   ]
-         * ]
-         */
-        // System.out.println(((BayesClassifier<String, String>) bayes).classifyDetailed(
-        //         Arrays.asList(unknownText2)));
-
     }
 }

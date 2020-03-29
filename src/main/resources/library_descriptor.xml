@@ -20,56 +20,6 @@
   <language>JAVA</language>
   <libraryFunctions>
     <libraryFunction>
-      <name>fnameDetector</name>
-      <function_type>SCALAR</function_type>
-      <argument_type>InputRecordType</argument_type>
-      <return_type>DetectResultType</return_type>
-      <definition>org.apache.asterix.external.library.KeywordsDetectorFactory</definition>
-      <parameters>KeywordsDetector.txt</parameters>
-      <parameters>fname</parameters>
-    </libraryFunction>
-    <libraryFunction>
-      <name>lnameDetector</name>
-      <function_type>SCALAR</function_type>
-      <argument_type>InputRecordType</argument_type>
-      <return_type>DetectResultType</return_type>
-      <definition>org.apache.asterix.external.library.KeywordsDetectorFactory</definition>
-      <parameters>KeywordsDetector.txt</parameters>
-      <parameters>lname</parameters>
-    </libraryFunction>
-    <libraryFunction>
-      <name>wordDetector</name>
-      <function_type>SCALAR</function_type>
-      <argument_type>ASTRING</argument_type>
-      <return_type>ABOOLEAN</return_type>
-      <definition>org.apache.asterix.external.library.WordInListFactory</definition>
-      <parameters>KeywordsDetector.txt</parameters>
-    </libraryFunction>
-    <libraryFunction>
-      <function_type>SCALAR</function_type>
-      <name>mysum</name>
-      <argument_type>AINT32,AINT32</argument_type>
-      <return_type>AINT32</return_type>
-      <definition>org.apache.asterix.external.library.SumFactory
-      </definition>
-    </libraryFunction>
-    <libraryFunction>
-      <function_type>SCALAR</function_type>
-      <name>getSentiment</name>
-      <argument_type>TweetType</argument_type>
-      <return_type>TweetType</return_type>
-      <definition>org.apache.asterix.external.library.SentimentFactory
-      </definition>
-    </libraryFunction>
-    <libraryFunction>
-      <function_type>SCALAR</function_type>
-      <name>CPUClassify</name>
-      <argument_type>TweetType</argument_type>
-      <return_type>TweetType</return_type>
-      <definition>org.apache.asterix.external.library.CPUBayesFactory
-      </definition>
-    </libraryFunction>
-    <libraryFunction>
       <function_type>SCALAR</function_type>
       <name>GPUClassify</name>
       <argument_type>TweetType</argument_type>
@@ -79,10 +29,10 @@
     </libraryFunction>
     <libraryFunction>
       <function_type>SCALAR</function_type>
-      <name>encrypt</name>
-      <argument_type>ASTRING</argument_type>
-      <return_type>ASTRING</return_type>
-      <definition>org.apache.asterix.external.library.EncryptFactory
+      <name>CPUClassify</name>
+      <argument_type>TweetType</argument_type>
+      <return_type>TweetType</return_type>
+      <definition>org.apache.asterix.external.library.CPUBayesFactory
       </definition>
     </libraryFunction>
   </libraryFunctions>

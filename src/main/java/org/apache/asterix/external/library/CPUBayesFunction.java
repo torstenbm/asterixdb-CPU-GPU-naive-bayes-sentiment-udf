@@ -18,16 +18,9 @@
  */
 package org.apache.asterix.external.library;
 
-import java.util.Timer;
-import java.util.concurrent.Callable;
-
 import org.apache.asterix.external.api.IExternalScalarFunction;
 import org.apache.asterix.external.api.IFunctionHelper;
 import org.apache.asterix.external.library.classifier.CPUUDF;
-import org.apache.asterix.external.library.classifier.GPUUDF;
-import org.apache.asterix.external.library.classifier.bayes.BayesClassifier;
-import org.apache.asterix.external.library.classifier.example.getDevice;
-import org.apache.asterix.external.library.java.JTypeTag;
 import org.apache.asterix.external.library.java.base.JLong;
 import org.apache.asterix.external.library.java.base.JRecord;
 import org.apache.asterix.external.library.java.base.JString;
@@ -36,11 +29,10 @@ public class CPUBayesFunction implements IExternalScalarFunction {
 
     private JString sentiment;
     public CPUUDF BayesClasifier;
-    public getDevice gd;
 
-    private long startTime, stopTime, batchTime;
-    private Integer classifiedInBatch = 0;
-    private boolean isNotDone = true;
+    private long batchTime;
+    private Integer classifiedDuringSecond = 0;
+
     private Integer seconds;
 
     @Override
@@ -59,10 +51,7 @@ public class CPUBayesFunction implements IExternalScalarFunction {
         result.setField("id", id);
         result.setField("text", text);
 
-        if (id.getValue() == 0){
-            startTime = System.nanoTime();
-        }
-        if (System.nanoTime() - this.batchTime > 1000000000 && this.isNotDone){
+        if (System.nanoTime() - this.batchTime > 1000000000){
             logClassifiedInBatchString();
             this.batchTime = System.nanoTime();
             this.seconds++;
@@ -72,38 +61,22 @@ public class CPUBayesFunction implements IExternalScalarFunction {
         result.setField("Sentiment", sentiment);
         functionHelper.setResult(result);
         
-        if (id.getValue() == 999999){
-            stopTime = System.nanoTime();
-            Long finalTime = stopTime-startTime;
-            System.out.println("Total classifying time: " + finalTime.toString());
-            this.isNotDone = false;
-        }
-        this.classifiedInBatch++;
+        this.classifiedDuringSecond++;
     }
 
     public void logClassifiedInBatchString(){
-        System.out.println("Classified during second " + this.seconds.toString() + ": " + this.classifiedInBatch.toString());
-        this.classifiedInBatch = 0;
+        System.out.println("Classified during second " + this.seconds.toString() + ": " + this.classifiedDuringSecond.toString());
+        this.classifiedDuringSecond = 0;
     }
 
     @Override
     public void initialize(IFunctionHelper functionHelper) throws Exception{
         sentiment = new JString("");
-        this.gd = new getDevice();
         this.BayesClasifier = new CPUUDF();
         System.out.println("Initialization of Bayes Classifier started");
         this.BayesClasifier.trainModel();
         System.out.println("Bayes Classifier Initialized");
         this.batchTime = System.nanoTime();
         this.seconds = 0;
-        // this.timer = new Timer();
-        // timer.schedule(new LogTask( 
-        //     new Callable<String>() {  
-        //         public String call(){ 
-        //             return getClassifiedInBatchString(); 
-        //         } 
-        //     }
-        // ), 0, 1000);
-        // System.out.println("I got out of initialize now");
     }
 }

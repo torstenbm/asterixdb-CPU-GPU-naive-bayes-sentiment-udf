@@ -32,7 +32,7 @@ import org.apache.asterix.external.library.java.base.JString;
 public class SentimentFunction implements IExternalScalarFunction {
 
     private JString sentiment;
-    public GPUUDF BayesClasifier;
+    public CPUUDF BayesClasifier;
     public getDevice gd;
 
     @Override
@@ -64,7 +64,7 @@ public class SentimentFunction implements IExternalScalarFunction {
     public void initialize(IFunctionHelper functionHelper) throws Exception{
         sentiment = new JString("");
         this.gd = new getDevice();
-        this.BayesClasifier = new GPUUDF();
+        this.BayesClasifier = new CPUUDF();
         System.out.println("Initialization of Bayes Classifier started");
         this.BayesClasifier.trainModel();
         System.out.println("Bayes Classifier Initialized");

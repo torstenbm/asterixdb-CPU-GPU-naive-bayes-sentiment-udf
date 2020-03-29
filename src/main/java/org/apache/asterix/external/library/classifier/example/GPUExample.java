@@ -26,8 +26,6 @@ import org.apache.asterix.external.library.classifier.bayes.CPUBayesClassifier;
 import org.apache.asterix.external.library.classifier.bayes.BayesClassifier;
 import org.apache.asterix.external.library.classifier.bayes.FeatureGenerator;
 import org.apache.asterix.external.library.classifier.bayes.GPUBayesClassifier;
-import org.apache.asterix.external.library.classifier.bayes.GPUIntBayesClassifier;
-import org.apache.asterix.external.library.classifier.bayes.GPUOtherIntBayesClassifier;
 import org.apache.asterix.external.library.classifier.Classifier;
 
 import java.io.BufferedReader;
@@ -51,24 +49,9 @@ public class GPUExample {
 
     public static void main(String[] args) throws InterruptedException {
 
-        /*
-         * Create a new classifier instance. The context features are Strings and the
-         * context will be classified with a String according to the featureset of the
-         * context.
-         */
         final GPUBayesClassifier<char[], String> bayes = new GPUBayesClassifier<char[], String>();
-        /*
-         * Please note, that this particular classifier implementation will "forget"
-         * learned classifications after a few learning sessions. The number of learning
-         * sessions it will record can be set as follows:
-         */
-        bayes.setMemoryCapacity(4000000);
 
-        /*
-         * The classifier can learn from classifications that are handed over to the
-         * learn methods. Imagine a tokenized text as follows. The tokens are the text's
-         * features. The category of the text will either be positive or negative.
-         */
+        bayes.setMemoryCapacity(4000000);
 
         String testingCsvFile = "/Users/torsten/Java-Naive-Bayes-Classifier/example/testdata.manual.csv";
         String trainingCsvFile = "/Users/torsten/aparapi-examples/src/main/java/com/aparapi/examples/classifier/example/training.shuffled.csv";
@@ -126,23 +109,6 @@ public class GPUExample {
         System.out.println("Total features: " + bayes.totalFeatureCount.size());
         System.out.println("Total chars in features: " + bayes.featureVector.length);
         System.out.println("Total categories: " + bayes.featureCountPerCategory.size());
-        // char[] testarray = new char[100];
-        // System.arraycopy(bayes.featureVector, 0, testarray, 0, 100);
-        // System.out.println(new String(testarray));
-        // char[][] testarray2 = new char[10][];
-        // System.arraycopy(bayes.unFlattenedFeatureVector, 0, testarray2, 0, 10);
-        // System.out.println(Arrays.deepToString(testarray2));
-        // System.out.println(bayes.featureIndexVector[0]);
-        // System.out.println(bayes.featureIndexVector[1]);
-        // System.out.println(bayes.featureIndexVector[2]);
-        // System.out.println(bayes.featureIndexVector[3]);
-
-        /*
-         * Now that the classifier has "learned" two classifications, it will
-         * be able to classify similar sentences. The classify method returns
-         * a Classification Object, that contains the given featureset,
-         * classification probability and resulting category.
-         */
 
         String category; 
         int rights = 0, wrongs = 0;
@@ -199,28 +165,5 @@ public class GPUExample {
         System.out.println("Classification completed in " + String.valueOf((endTime-startTime)/Math.pow(10, 9)) + " seconds");
         System.out.println(String.format("With %d correct predictions and %d wrong", rights, wrongs));
         System.out.println(totals);
-        /*
-         * The BayesClassifier extends the abstract Classifier and provides
-         * detailed classification results that can be retrieved by calling
-         * the classifyDetailed Method.
-         *
-         * The classification with the highest probability is the resulting
-         * classification. The returned List will look like this.
-         * [
-         *   Classification [
-         *     category=negative,
-         *     probability=0.0078125,
-         *     featureset=[today, is, a, sunny, day]
-         *   ],
-         *   Classification [
-         *     category=positive,
-         *     probability=0.0234375,
-         *     featureset=[today, is, a, sunny, day]
-         *   ]
-         * ]
-         */
-        // System.out.println(((BayesClassifier<String, String>) bayes).classifyDetailed(
-        //         Arrays.asList(unknownText2)));
-
     }
 }
