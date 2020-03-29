@@ -22,7 +22,6 @@ import com.univocity.parsers.csv.CsvParserSettings;
 
 import org.apache.log4j.helpers.SyslogWriter;
 
-import org.apache.asterix.external.library.classifier.bayes.CPUBayesClassifier;
 import org.apache.asterix.external.library.classifier.bayes.BayesClassifier;
 import org.apache.asterix.external.library.classifier.bayes.FeatureGenerator;
 import org.apache.asterix.external.library.classifier.bayes.GPUBayesClassifier;

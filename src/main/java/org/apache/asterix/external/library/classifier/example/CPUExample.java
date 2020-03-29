@@ -23,7 +23,7 @@ import java.util.Map;
 import com.opencsv.CSVReader;
 import com.univocity.parsers.csv.CsvParser;
 import com.univocity.parsers.csv.CsvParserSettings;
-import org.apache.asterix.external.library.classifier.bayes.CPUBayesClassifier;
+
 import org.apache.asterix.external.library.classifier.bayes.BayesClassifier;
 import org.apache.asterix.external.library.classifier.bayes.FeatureGenerator;
 import org.apache.asterix.external.library.classifier.Classifier;

@@ -20,7 +20,7 @@ package org.apache.asterix.external.library;
 
 import org.apache.asterix.external.api.IExternalScalarFunction;
 import org.apache.asterix.external.api.IFunctionHelper;
-import org.apache.asterix.external.library.classifier.CPUUDF;
+import org.apache.asterix.external.library.classifier.CPUBayesForSentimentAnalysis;
 import org.apache.asterix.external.library.java.base.JLong;
 import org.apache.asterix.external.library.java.base.JRecord;
 import org.apache.asterix.external.library.java.base.JString;
@@ -28,7 +28,7 @@ import org.apache.asterix.external.library.java.base.JString;
 public class CPUBayesFunction implements IExternalScalarFunction {
 
     private JString sentiment;
-    public CPUUDF BayesClasifier;
+    public CPUBayesForSentimentAnalysis BayesClasifier;
 
     private long batchTime;
     private Integer classifiedDuringSecond = 0;
@@ -72,7 +72,7 @@ public class CPUBayesFunction implements IExternalScalarFunction {
     @Override
     public void initialize(IFunctionHelper functionHelper) throws Exception{
         sentiment = new JString("");
-        this.BayesClasifier = new CPUUDF();
+        this.BayesClasifier = new CPUBayesForSentimentAnalysis();
         System.out.println("Initialization of Bayes Classifier started");
         this.BayesClasifier.trainModel();
         System.out.println("Bayes Classifier Initialized");
