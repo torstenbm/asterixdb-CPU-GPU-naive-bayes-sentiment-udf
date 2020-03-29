@@ -14,12 +14,8 @@ tweet_csv_file = open("testing.csv")
 with tweet_csv_file as input_data:
     rdr= csv.reader( input_data )
     for i, line in enumerate(rdr):
-        # if i == 1:
-        #     break
         if i > 1499999:
             break
-        if i % 10000 == 0:
-            time.sleep(1)
         sock.sendall(json.dumps({'id': i, 'text': line[1]}).encode('utf-8'))
     sock.close()
 
