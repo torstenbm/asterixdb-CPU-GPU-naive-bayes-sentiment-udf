@@ -38,8 +38,8 @@
     <libraryFunction>
       <function_type>SCALAR</function_type>
       <name>CPUBatchClassify</name>
-      <argument_type>TweetType[]</argument_type>
-      <return_type>TweetType[]</return_type>
+      <argument_type>[TweetType]</argument_type>
+      <return_type>[TweetType]</return_type>
       <definition>org.apache.asterix.external.library.CPUBayesBatchFactory
       </definition>
     </libraryFunction>

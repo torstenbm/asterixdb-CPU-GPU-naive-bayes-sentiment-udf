@@ -41,23 +41,18 @@ public class CPUBayesBatchFunction implements IExternalScalarFunction {
 
     @Override
     public void evaluate(IFunctionHelper functionHelper) throws Exception {
-        // Read input records
         JList inputRecords = (JList) functionHelper.getArgument(0);
-
+        JList outputRecords = (JList) functionHelper.getResultObject();
         for (int i = 0; i < inputRecords.size(); i++){
             JRecord inputRecord = (JRecord) inputRecords.getElement(i);
-            JLong id = (JLong) inputRecord.getValueByName("id");
             JString text = (JString) inputRecord.getValueByName("text");
             
-            // Populate a single result record
-            JRecord result = (JRecord) functionHelper.getResultObject();
-            result.setField("id", id);
-            result.setField("text", text);
-    
+            sentiment = new JString("");
             sentiment.setValue(this.BayesClasifier.classify(text));
-            result.setField("Sentiment", sentiment);
-            functionHelper.setResult(result);    
+            inputRecord.setField("Sentiment", sentiment);
+            outputRecords.add(inputRecord);
         }
+        functionHelper.setResult(outputRecords);
     }
 
     public void logClassifiedInBatchString(){
@@ -67,7 +62,6 @@ public class CPUBayesBatchFunction implements IExternalScalarFunction {
 
     @Override
     public void initialize(IFunctionHelper functionHelper) throws Exception{
-        sentiment = new JString("");
         this.BayesClasifier = new CPUBayesForSentimentAnalysis();
         System.out.println("Initialization of Bayes Classifier started");
         this.BayesClasifier.trainModel();
