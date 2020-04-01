@@ -50,7 +50,7 @@ CONNECT FEED SocketTweetFeed TO DATASET StreamedTweetsDataset APPLY FUNCTION {Li
 
 START FEED SocketTweetFeed;
 ```
-then stream tweets into the socket by using `tweet-streamer.py`.
+then stream tweets into the socket by using `streamer.py`.
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
